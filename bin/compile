@@ -137,6 +137,12 @@ default_process_types:
   web: bin/dockerize -template conf.d:logstash.conf.d /bin/bash -c bin/run.sh
 EOF
 
+step "Create bin/run.sh"
+mkdir -p ${BUILDDIR}/.profile.d
+echo 'PATH=${PATH}:${HOME}/bin:${HOME}/openjdk/bin' > ${BUILDDIR}/.profile.d/run.sh
+cat << EOF >> ${BUILDDIR}/bin/run.sh
+#!/bin/bash
+
 # Start Logstash
 export JAVA_HOME=\${HOME}/openjdk
 export LS_HEAP_SIZE=${LS_HEAP_SIZE}
